@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>ISBN Lookup</title>
+
+  <link rel="stylesheet" href="css/normalize.css" />
+  
+  <link rel="stylesheet" href="css/foundation.css" />
+  
+
+  <script src="js/vendor/jquery.js"></script>
+
+  <style>
+    .isbnLookup {
+      margin-top: 40px;
+    }
+    .alignRight{
+      text-align: right;
+    }
+    .lightText {
+      color: #999;
+    }
+    .row.topSpace {
+      margin-top: 30px;
+    }
+  </style>
+
+</head>
+<body>
+
+	<div class="row">
+    <h1>ISBN Lookup</h1>
+
+      <div class="row">
+        <div class="small-6" id="bookInfo">
+          <div class="row">
+            <div class="small-3 columns">
+              <label for="isbn" class="right inline">ISBN</label>
+            </div>
+            <div class="small-9 columns">
+              <input type="text" id="isbn" placeholder="ISBN-10 or ISBN-13, with or without Dashes">
+            </div>
+          </div>
+          <div class="row">
+            <div class="small-3 columns alignRight lightText">
+              Title:
+            </div>
+            <div class="small-9 columns" id="bookTitle">
+              ...
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="small-3 columns alignRight lightText">
+              Author:
+            </div>
+            <div class="small-9 columns" id="bookAuthor">
+              ...
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="small-3 columns alignRight lightText">
+              Pages:
+            </div>
+            <div class="small-9 columns" id="bookPages">
+              ...
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="small-3 columns alignRight lightText">
+              Description:
+            </div>
+            <div class="small-9 columns" id="bookDescription">
+              ...
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="small-3 columns alignRight lightText">
+              Date:
+            </div>
+            <div class="small-9 columns" id="bookDate">
+              ...
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="small-3 columns alignRight lightText">
+              Image:
+            </div>
+            <div class="small-9 columns">
+              <img src="" id="bookImg"/>
+            </div>
+          </div>
+          <br/>
+        </div>
+      </div>
+
+
+	</div>
+  <div id="responseTest">
+  </div>
+
+
+
+  <script>
+  document.write('<script src=' +
+  ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
+  '.js><\/script>')
+  </script>
+  
+  <script src="js/foundation.min.js"></script>
+  <!--
+  
+  <script src="js/foundation/foundation.js"></script>
+  
+  <script src="js/foundation/foundation.dropdown.js"></script>
+  
+  <script src="js/foundation/foundation.alerts.js"></script>
+  
+  <script src="js/foundation/foundation.placeholder.js"></script>
+  
+  <script src="js/foundation/foundation.forms.js"></script>
+  
+  <script src="js/foundation/foundation.section.js"></script>
+  
+  <script src="js/foundation/foundation.tooltips.js"></script>
+  
+  <script src="js/foundation/foundation.topbar.js"></script>
+  
+  -->
+  
+  <script>
+    $(document).foundation(function(){
+
+      $('#isbn').keyup(function(){
+        findInfo();
+      });
+
+      
+
+    });
+    function clearInfo(){
+      $('.number').remove();
+    }
+    function findInfo(){
+      clearInfo();
+        var isbn = $('#isbn').val().trim();
+        isbn = isbn.replace(/\-/g,'');
+        //console.log(isbn);
+        if (isbn.length > 9){
+          var url = 'https://www.googleapis.com/books/v1/volumes?q=isbn:'+isbn;
+          console.log(url);
+          var test = $.getJSON(url,function(data){
+            console.log(data);
+            var title = data.items[0].volumeInfo.title;
+            $('#bookTitle').text(title);
+            var authors ='';
+            for (var i = 0; i < data.items[0].volumeInfo.authors.length; i++){
+              if (i > 0){
+                authors += ', ';
+              }
+              authors += data.items[0].volumeInfo.authors[i];
+            }
+            $('#bookAuthor').text(authors);
+            $('#bookPages').text(data.items[0].volumeInfo.pageCount);
+            $('#bookDescription').text(data.items[0].volumeInfo.description);
+            var year = data.items[0].volumeInfo.publishedDate.split('-')[0];
+            $('#bookDate').text(year);
+
+            for (var j=0; j < data.items[0].volumeInfo.industryIdentifiers.length; j++) {
+              console.log(j);
+              var thisDiv= $(document.createElement('div'));
+              thisDiv.addClass('number');
+              thisDiv.addClass('row');
+              var thisNameDiv = $(document.createElement('div'));
+              var thisNumDiv = $(document.createElement('div'));
+              //small-3 columns alignRight lightText
+              thisNameDiv.addClass('small-3');
+              thisNameDiv.addClass('columns');
+              thisNameDiv.addClass('alignRight');
+              thisNameDiv.addClass('lightText');
+              var thisName = data.items[0].volumeInfo.industryIdentifiers[j].type;
+              thisNameDiv.text(thisName);
+              //small-9 columns
+              thisNumDiv.addClass('small-9');
+              thisNumDiv.addClass('columns');
+              var thisNum = data.items[0].volumeInfo.industryIdentifiers[j].identifier;
+              thisNumDiv.text(thisNum);
+
+              thisDiv.append(thisNameDiv);
+              thisDiv.append(thisNumDiv);
+              $('#bookInfo').append($(document.createElement('br')).addClass('number'));
+              $('#bookInfo').append(thisDiv);
+
+              $('#bookImg').attr('src','http://covers.librarything.com/devkey/441b3d90c036eff9fbb3813446316e92/large/isbn/'+isbn);
+              //https://www.google.com/search?q=lean+startup+cover&hl=en&site=imghp&tbm=isch
+              var googleURL = 'https://www.google.com/search?q='+title.split(' ').join('+')+'+cover&hl=en&site=imghp&tbm=isch';
+              console.log(googleURL);
+              $('#responseTest').load('googleURL');
+            }
+            
+          });
+        }
+      }
+  </script>
+</body>
+</html>
