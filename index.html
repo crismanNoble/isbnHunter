@@ -31,83 +31,123 @@
 
 </head>
 <body>
-
-	<div class="row">
-    <h1>ISBN Lookup</h1>
-
+  <div class="row">
+    <div class="large-8 small-8 large-offset-2 small-offset-2 columns">
+      <h1>ISBN Lookup</h1>
+    </div>
+  </div>
       <div class="row">
-        <div class="small-6" id="bookInfo">
+        <div class="large-12 small-12 columns" id="bookInfo">
+
           <div class="row">
-            <div class="small-3 columns">
+
+            <div class="small-2 large-2 columns">
               <label for="isbn" class="right inline">ISBN</label>
             </div>
-            <div class="small-9 columns">
+            <div class="small-10 large-4 columns">
               <input type="text" id="isbn" placeholder="ISBN-10 or ISBN-13, with or without Dashes">
             </div>
+            <div class="large-6 small-0">
+            </div>
+
           </div>
+
+          <hr/>
+
           <div class="row">
-            <div class="small-3 columns alignRight lightText">
-              Title:
+
+            <div class="small-2 large-2 columns alignRight lightText">
+              <label for="bookTitle" class="right inline">Title</label>
             </div>
-            <div class="small-9 columns" id="bookTitle">
-              ...
+            <div class="small-10 large-4 columns">
+              <input type="text" id="bookTitle" placeholder="..."/>
             </div>
+
+            <div class="small-2 large-2 columns alignRight lightText">
+              <label for="bookAuthor" class="right inline">Author</label>
+            </div>
+            <div class="small-10 large-4 columns">
+              <input type="text" id="bookAuthor" placeholder="..."/>
+            </div>
+
           </div>
-          <br/>
+
           <div class="row">
-            <div class="small-3 columns alignRight lightText">
-              Author:
+
+            <div class="small-2 large-2 columns alignRight lightText">
+              <label for="bookDate" class="right inline">Date</label>
             </div>
-            <div class="small-9 columns" id="bookAuthor">
-              ...
+            <div class="small-10 large-4 columns">
+              <input type="text" id="bookDate" placeholder="..."/>
             </div>
+
+            <div class="small-2 large-2 columns alignRight lightText">
+              <label for="bookPages" class="right inline">Pages</label>
+            </div>
+            <div class="small-10 large-4 columns">
+              <input type="text" id="bookPages" placeholder="..."/>
+            </div>
+
           </div>
-          <br/>
+
           <div class="row">
-            <div class="small-3 columns alignRight lightText">
-              Pages:
+
+            <div class="small-2 large-2 columns alignRight lightText">
+              <label for="bookDescription" class="right inline">Description</label>
             </div>
-            <div class="small-9 columns" id="bookPages">
-              ...
+            <div class="small-10 large-4 columns">
+              <textarea id="bookDescription" style="height:142px"></textarea>
             </div>
+
+            <div class="small-2 large-2 columns alignRight lightText">
+              <label for="bookDescription" class="right inline">Google Link</label>
+            </div>
+            <div class="small-10 large-4 columns">
+              <input type="text" id="googleLink"/>
+            </div>
+
+            <div class="small-2 large-2 columns alignRight lightText">
+              <label for="bookDescription" class="right inline">Powell Link</label>
+            </div>
+
+            <div class="small-10 large-4 columns">
+              <input type="text" id="powellLink"/>
+            </div>
+
+            <div class="small-10 large-4 columns">
+              <a href="#">+ add link</a>
+            </div>
+
           </div>
-          <br/>
+
           <div class="row">
-            <div class="small-3 columns alignRight lightText">
-              Description:
+            <div class="small-2 large-2 columns alignRight lightText">
+              <label for="imgs" class="right inline">Images</label>
             </div>
-            <div class="small-9 columns" id="bookDescription">
-              ...
-            </div>
-          </div>
-          <br/>
-          <div class="row">
-            <div class="small-3 columns alignRight lightText">
-              Date:
-            </div>
-            <div class="small-9 columns" id="bookDate">
-              ...
-            </div>
-          </div>
-          <br/>
-          <div class="row">
-            <div class="small-3 columns alignRight lightText">
-              Image:
-            </div>
-            <div class="small-9 columns">
+            <div class="small-10 large-4 columns" style="min-height: 300px">
               <img src="" id="bookImg"/>
+              <img src="" id="firstImage"/>
+              <img src="" id="openLibraryImageSRC"/>
             </div>
+
+            <div class="small-2 large-2 columns alignRight lightText">
+              <label for="imgs" class="right inline">ISBN-10</label>
+            </div>
+            <div class="small-10 large-4 columns">
+              <input type="text" id="isbn10"/>
+            </div>
+
+            <div class="small-2 large-2 columns alignRight lightText">
+              <label for="imgs" class="right inline">ISBN-13</label>
+            </div>
+            <div class="small-10 large-4 columns">
+              <input type="text" id="isbn13"/>
+            </div>
+
           </div>
-          <br/>
+
         </div>
       </div>
-
-
-	</div>
-  <div id="responseTest">
-  </div>
-
-
 
   <script>
   document.write('<script src=' +
@@ -154,13 +194,21 @@
         var isbn = $('#isbn').val().trim();
         isbn = isbn.replace(/\-/g,'');
         //console.log(isbn);
-        if (isbn.length > 9){
-          var url = 'https://www.googleapis.com/books/v1/volumes?q=isbn:'+isbn;
-          console.log(url);
-          var test = $.getJSON(url,function(data){
-            console.log(data);
+        if (isbn.length == 10 || isbn.length == 13){
+
+          var googleURL = 'https://www.googleapis.com/books/v1/volumes?q=isbn:'+isbn;
+          var powellURL = 'http://www.powells.com/biblio/1-'+isbn+'-1';
+          var openLibraryURL = 'http://openlibrary.org/isbn/'+isbn;
+          var openLibraryImageSRC = 'http://covers.openlibrary.org/b/isbn/'+isbn+'-L.jpg';
+
+          $('#powellLink').val(powellURL);
+
+          $('#openLibraryImageSRC').attr('src',openLibraryImageSRC).attr('style','width:49%px');
+
+          $.getJSON(googleURL, function(data){
+            //console.log(data);
             var title = data.items[0].volumeInfo.title;
-            $('#bookTitle').text(title);
+            $('#bookTitle').val(title);
             var authors ='';
             for (var i = 0; i < data.items[0].volumeInfo.authors.length; i++){
               if (i > 0){
@@ -168,11 +216,15 @@
               }
               authors += data.items[0].volumeInfo.authors[i];
             }
-            $('#bookAuthor').text(authors);
-            $('#bookPages').text(data.items[0].volumeInfo.pageCount);
+            $('#bookAuthor').val(authors);
+            $('#bookPages').val(data.items[0].volumeInfo.pageCount);
             $('#bookDescription').text(data.items[0].volumeInfo.description);
             var year = data.items[0].volumeInfo.publishedDate.split('-')[0];
-            $('#bookDate').text(year);
+            $('#bookDate').val(year);
+
+            var infoLink = 'http://books.google.com/books?id=IkU8YgEACAAJ&dq=isbn:9781936719006&hl=&source=gbs_api';
+            $('#googleLink').val(infoLink);
+            
 
             for (var j=0; j < data.items[0].volumeInfo.industryIdentifiers.length; j++) {
               console.log(j);
@@ -201,9 +253,20 @@
 
               $('#bookImg').attr('src','http://covers.librarything.com/devkey/441b3d90c036eff9fbb3813446316e92/large/isbn/'+isbn);
               //https://www.google.com/search?q=lean+startup+cover&hl=en&site=imghp&tbm=isch
-              var googleURL = 'https://www.google.com/search?q='+title.split(' ').join('+')+'+cover&hl=en&site=imghp&tbm=isch';
-              console.log(googleURL);
-              $('#responseTest').load('googleURL');
+              //var googleURL = 'https://www.google.com/search?q='+title.split(' ').join('+')+'+cover&hl=en&site=imghp&tbm=isch';
+              //console.log(googleURL);
+              
+
+              $(document).load('./nodes/query.php?query='+title.split(' ').join('+')+'+cover', function(data){
+                  var src = String(data);
+                  $('#firstImage').attr('src',src);
+                }
+              );
+
+              
+              $('#firstImage').attr('style','width:49%');
+
+
             }
             
           });
