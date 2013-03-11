@@ -27,12 +27,46 @@
     .row.topSpace {
       margin-top: 30px;
     }
+    
+    .coverUp {
+      width: 16px;
+      height: 16px;
+      background: rgba(255,255,255,.7);
+      transition: background .3s linear;;
+      -webkit-transition: background .3s linear;
+    }
+
+    .serviceIcon {
+      display:inline-block;
+      width: 16px;
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+    .serviceGoogle {
+      background-image:url('img/google.png');
+    }
+    .serviceLibraryThing {
+      background-image:url('img/lt.png');
+    }
+    .serviceOpenLibrary {
+      background-image:url('img/open.png');
+    }
+    .coverUp:hover{
+      background: transparent;
+    }
+    label.tightLeft {
+      padding-left: 0;
+    }
+    .bumpDown {
+      margin-bottom:10px;
+    }
+
   </style>
 
 </head>
 <body>
   <div class="row">
-    <div class="large-8 small-8 large-offset-2 small-offset-2 columns">
+    <div class="large-10 small-10 large-offset-1 small-offset-1 columns">
       <h1>ISBN Lookup</h1>
     </div>
   </div>
@@ -41,107 +75,130 @@
 
           <div class="row">
 
-            <div class="small-2 large-2 columns">
-              <label for="isbn" class="right inline">ISBN</label>
-            </div>
-            <div class="small-10 large-4 columns">
-              <input type="text" id="isbn" placeholder="ISBN-10 or ISBN-13, with or without Dashes">
-            </div>
-            <div class="large-6 small-0">
+            <div class="small-10 large-5 large-offset-1 small-offset-1 columns">
+                <label for="isbn" class="small-12 large-12 columns">ISBN</label>
+                <input type="text" class="small-12 large-12 columns" id="isbn" placeholder="ISBN-10 or ISBN-13, with or without Dashes">
             </div>
 
-          </div>
-
-          <hr/>
-
-          <div class="row">
-
-            <div class="small-2 large-2 columns alignRight lightText">
-              <label for="bookTitle" class="right inline">Title</label>
+            <div class="small-10 small-offset-1 large-5 large-offset-0 columns">
+                <label class="small-12 large-12 columns lightText">Services</label>
+                <div class="small-12 large-12 columns">
+                  <div class="serviceIcon serviceGoogle">
+                    <div class="coverUp"></div>
+                  </div>
+                  <div class="serviceIcon serviceOpenLibrary">
+                    <div class="coverUp"></div>
+                  </div>
+                  <div class="serviceIcon serviceLibraryThing">
+                    <div class="coverUp"></div>
+                  </div>
+                </div>
             </div>
-            <div class="small-10 large-4 columns">
-              <input type="text" id="bookTitle" placeholder="..."/>
-            </div>
 
-            <div class="small-2 large-2 columns alignRight lightText">
-              <label for="bookAuthor" class="right inline">Author</label>
-            </div>
-            <div class="small-10 large-4 columns">
-              <input type="text" id="bookAuthor" placeholder="..."/>
+            <div class="large-1 small-1">
             </div>
 
           </div>
 
           <div class="row">
+            <div class="small-10 large-5 large-offset-1 small-offset-1 columns">
+              <label for="bookTitle" class="small-12 large-12 columns lightText">Title</label>
+              <input type="text" id="bookTitle" class="small-12 large-12 columns" placeholder="..."/>
+            </div>
+            <div class="small-10 small-offset-1 large-5 large-offset-0 columns">
+              <label for="bookAuthor" class="small-12 large-12 columns lightText">Author</label>
+              <input type="text" id="bookAuthor" class="small-12 large-12 columns" placeholder="..."/>
+            </div>
+            <div class="large-1 small-1">
+            </div>
+          </div>
 
-            <div class="small-2 large-2 columns alignRight lightText">
-              <label for="bookDate" class="right inline">Date</label>
+          <div class="row">
+            <div class="small-10 large-5 large-offset-1 small-offset-1 columns">
+              <label for="bookPublisher" class="small-12 large-12 columns lightText">Publisher</label>
+              <input type="text" id="bookPublisher" class="small-12 large-12 columns" placeholder="..."/>
             </div>
-            <div class="small-10 large-4 columns">
-              <input type="text" id="bookDate" placeholder="..."/>
+            <div class="small-10 small-offset-1 large-5 large-offset-0 columns">
+              <label for="bookCity" class="small-12 large-12 columns lightText">City</label>
+              <input type="text" id="bookCity" class="small-12 large-12 columns" placeholder="..."/>
             </div>
+            <div class="large-1 small-1">
+            </div>
+          </div>
 
-            <div class="small-2 large-2 columns alignRight lightText">
-              <label for="bookPages" class="right inline">Pages</label>
+          <div class="row">
+            <div class="small-10 large-5 large-offset-1 small-offset-1 columns">
+              <label for="bookTitle" class="small-12 large-12 columns lightText">Date</label>
+              <input type="text" id="bookDate" class="small-12 large-12 columns" placeholder="..."/>
             </div>
-            <div class="small-10 large-4 columns">
-              <input type="text" id="bookPages" placeholder="..."/>
+            <div class="small-10 small-offset-1 large-5 large-offset-0 columns">
+              <label for="bookPages" class="small-12 large-12 columns lightText">Pages</label>
+              <input type="text" id="bookPages" class="small-12 large-12 columns" placeholder="..."/>
             </div>
-
+            <div class="large-1 small-1">
+            </div>
           </div>
 
           <div class="row">
 
-            <div class="small-2 large-2 columns alignRight lightText">
-              <label for="bookDescription" class="right inline">Description</label>
-            </div>
-            <div class="small-10 large-4 columns">
-              <textarea id="bookDescription" style="height:142px"></textarea>
-            </div>
-
-            <div class="small-2 large-2 columns alignRight lightText">
-              <label for="bookDescription" class="right inline">Google Link</label>
-            </div>
-            <div class="small-10 large-4 columns">
-              <input type="text" id="googleLink"/>
-            </div>
-
-            <div class="small-2 large-2 columns alignRight lightText">
-              <label for="bookDescription" class="right inline">Powell Link</label>
+            <div class="small-10 large-5 large-offset-1 small-offset-1 columns">
+              <label for="bookTitle" class="small-12 large-12 columns lightText">
+                Google Books <img src="img/link.gif" />
+              </label>
+              <input type="text" id="googleLink" class="small-12 large-12 columns" placeholder="..."/>
+              <label for="bookTitle" class="small-12 large-12 columns lightText">
+                Powell <img src="img/link.gif" />
+              </label>
+              <input type="text" id="powellLink" class="small-12 large-12 columns" placeholder="..."/>
+              <div class="small-12 large-12 columns bumpDown">
+                <a href="#" class="bumpDown">+ add link</a>
+              </div>
             </div>
 
-            <div class="small-10 large-4 columns">
-              <input type="text" id="powellLink"/>
-            </div>
+            <div class="small-10 small-offset-1 large-5 large-offset-0 columns">
 
-            <div class="small-10 large-4 columns">
-              <a href="#">+ add link</a>
+              <label for="" class="small-12 large-12 columns lightText">ISBN-10</label>
+              <input type="text" id="" class="small-12 large-12 columns" placeholder="..."/>
+
+              <label for="" class="small-12 large-12 columns lightText">ISBN-10</label>
+              <input type="text" id="" class="small-12 large-12 columns" placeholder="..."/>
+
+              <div class="small-12 large-12 columns bumpDown">
+                <a href="#">+ add number</a>
+              </div>
+
+            </div>
+            <div class="large-1 small-1">
             </div>
 
           </div>
 
-          <div class="row">
-            <div class="small-2 large-2 columns alignRight lightText">
-              <label for="imgs" class="right inline">Images</label>
-            </div>
-            <div class="small-10 large-4 columns" style="min-height: 300px">
-              <img src="" id="bookImg"/>
-              <img src="" id="firstImage"/>
-              <img src="" id="openLibraryImageSRC"/>
-            </div>
-
-            <div class="small-2 large-2 columns alignRight lightText">
-              <label for="imgs" class="right inline">ISBN-10</label>
-            </div>
-            <div class="small-10 large-4 columns">
-              <input type="text" id="isbn10"/>
+          <div class="row bumpDown">
+            
+            <div class="small-10 large-5 large-offset-1 small-offset-1 columns">
+              <label for="bookTitle" class="small-12 large-12 columns lightText">
+                Description
+              </label>
+              <textarea id="bookDesc" class="small-12 large-12 columns">
+              </textarea>
+              
             </div>
 
-            <div class="small-2 large-2 columns alignRight lightText">
-              <label for="imgs" class="right inline">ISBN-13</label>
+            <div class="small-10 large-5 large-offset-0 small-offset-1 columns">
+
+              <label for="bookTitle" class="small-12 large-12 columns lightText">
+                Images
+              </label>
+
+              <div class="small-12 large-12 columns" style="min-height: 300px">
+                <img src="" id="bookImg"/>
+                <img src="" id="firstImage"/>
+                <img src="" id="openLibraryImageSRC"/>
+              </div>
+
             </div>
-            <div class="small-10 large-4 columns">
-              <input type="text" id="isbn13"/>
+
+            <div class="large-1 small-1">
             </div>
 
           </div>

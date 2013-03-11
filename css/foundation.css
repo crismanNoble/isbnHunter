@@ -283,6 +283,10 @@ select {
     position: relative;
     width: 100%; }
 
+  .row .large-offset-0 {
+    position: relative;
+    margin-left: 0%; }
+
   .row .large-offset-1 {
     position: relative;
     margin-left: 8.33333%; }
